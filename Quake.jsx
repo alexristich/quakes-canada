@@ -30,10 +30,13 @@ Quake = React.createClass({
             //TODO implement opacity functionality
         };
 
+        // TODO add back styling for circle
+        //<div style={circle}></div>
+        //<h5>Magnitude: {mag}</h5>
+
+
         return (
             <div>
-                <div style={circle}></div>
-                <h5>Magnitude: {mag}</h5>
             </div>
         )
     }
