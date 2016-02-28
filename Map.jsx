@@ -11,8 +11,7 @@ Map = React.createClass({
     },
 
 
-    renderMap() {
-
+    render() {
         // initialize a blank vectorSource
         var vectorSource = new ol.source.Vector({});
 
@@ -23,10 +22,6 @@ Map = React.createClass({
 
         var vectorLayer = new ol.layer.Vector({
             source: vectorSource
-            //style: function(feature, resolution) {
-            //    style.getText().setText(resolution < 5000 ? feature.get('name') : '');
-            //    return styles;
-            //}
         });
 
         var map = new ol.Map({
@@ -43,15 +38,10 @@ Map = React.createClass({
             })
         });
 
-
-        ReactDOM.render(map, document.getElementById("render-map"));
-    },
-
-    render() {
-        return(
-            <div>
-                {this.renderMap()}
-            </div>
+        // rendering in this case is handled by OpenLayers
+        return (
+            <div />
         )
     }
+
 });

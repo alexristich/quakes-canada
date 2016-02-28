@@ -6,7 +6,6 @@ if (Meteor.isClient) {
         Meteor.subscribe("quakes");
 
         ReactDOM.render(<Map />, document.getElementById("render-map"));
-
     });
 }
 
