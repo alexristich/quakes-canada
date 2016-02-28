@@ -5,7 +5,7 @@ var Schemas = {};
 Schemas.Quake = new SimpleSchema({
     _id: {
         type: String,
-        label: "Solution ID"
+        label: "Quake ID"
     },
 
     date: {
@@ -15,19 +15,36 @@ Schemas.Quake = new SimpleSchema({
         optional: true
     },
 
-    lat: {
+    geoJSON: {
+        type: Object,
+        label: "GeoJSON Data",
+        optional: true
+    },
+
+    "geoJSON.type": {
+        type: String,
+        label: "GeoJSON Type"
+    },
+
+    "geoJSON.coordinates": {
+        type: Object,
+        label: "Coordinates"
+    },
+
+    "geoJSON.coordinates.lat": {
         type: String,
         label: "Latitude"
     },
 
-    lon: {
+    "geoJSON.coordinates.lon": {
         type: String,
         label: "Longitude"
     },
 
     mag: {
         type: String,
-        label: "Magnitude"
+        label: "Magnitude",
+        optional: true
     },
 
     depth: {
@@ -36,9 +53,9 @@ Schemas.Quake = new SimpleSchema({
         optional: true
     },
 
-    type: {
+    magType: {
         type: String,
-        label: "Earthquake Type",
+        label: "Magnitude Type",
         optional: true
     },
 
@@ -72,22 +89,39 @@ Meteor.methods({
         }
     },
 
-    addEarthquake: function(quakeData) {
+    addEarthquake: function(data) {
         // TODO parse location
 
-        var quake = {
-            _id: quakeData.solution_id,
-            // TODO set this as a JS Date object
-            date: quakeData.origin_time,
-            lat: quakeData.geoJSON.coordinates[0],
-            lon: quakeData.geoJSON.coordinates[1],
-            mag: quakeData.magnitude,
-            depth: quakeData.depth,
-            type: quakeData.magnitude_type
+        var quakeId = data.solution_id;
+
+        var coordinates = {
+            lat: data.geoJSON.coordinates[0],
+            lon: data.geoJSON.coordinates[1]
         };
 
+        JSONObject = {
+            type: data.geoJSON.type,
+                coordinates: coordinates
+        };
+
+        var quake = {
+            _id: data.solution_id,
+            // TODO set this as a JS Date object
+            date: data.origin_time,
+            geoJSON: JSONObject,
+            mag: data.magnitude,
+            depth: data.depth,
+            magType: data.magnitude_type
+        };
+
+        Quakes.upsert({_id: quakeId}, {
+            $set: quake
+        });
+
+        console.log(Quakes.findOne({_id: quakeId}));
+
         // TODO check if we need to change this to upsert when adding additional data sets
-        Quakes.insert(quake);
+
     },
 
     clearQuakes: function() {
