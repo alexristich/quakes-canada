@@ -14,6 +14,18 @@ Map = React.createClass({
         return this.data.earthquakes[0];
     },
 
+    renderFeatures(vectorSource) {
+        return (
+         this.data.earthquakes.map((quake) => {
+             vectorSource.addFeature(new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat(
+                    [quake.feature.geometry.coordinates.lon, quake.feature.geometry.coordinates.lat]))
+            }));
+             console.log("This is the lon: " + quake.feature.geometry.coordinates.lon);
+             console.log("This is the lat: " + quake.feature.geometry.coordinates.lat)
+        }))
+    },
+
     render() {
 
         var image = new ol.style.Circle({
@@ -49,7 +61,7 @@ Map = React.createClass({
                 'type': 'Feature',
                 'geometry': {
                     'type': 'Point',
-                    'coordinates': ol.proj.fromLonLat([-124.552, 48.003])
+                    'coordinates': ol.proj.fromLonLat([0, 0])
                 }
             }]
         };
@@ -60,6 +72,21 @@ Map = React.createClass({
 
         var quakeToInsert = this.getQuake();
 
+        var newFeatures =                 {
+            'type': 'FeatureCollection',
+            'features': [
+                {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': ol.proj.fromLonLat([0, 0])
+                    }
+                }]
+        };
+
+        this.renderFeatures(vectorSource);
+
+
         if (quakeToInsert) {
             vectorSource.addFeature(new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat(
                 [quakeToInsert.feature.geometry.coordinates.lon,
@@ -68,20 +95,7 @@ Map = React.createClass({
             console.log("Quake longitude: " + quakeToInsert.feature.geometry.coordinates.lon);
         }
 
-        if (this.data.earthquakes[0] !== undefined) {
-            var firstQuakeFeature = this.data.earthquakes[0].feature;
-            var firstQuakeLat = parseFloat(firstQuakeFeature.geometry.coordinates.lon);
-            var firstQuakeLon = parseFloat(firstQuakeFeature.geometry.coordinates.lat);
 
-            console.log(firstQuakeLat);
-            console.log(firstQuakeLon);
-
-            firstQuakeFeature.geometry.coordinates.lat = firstQuakeLat;
-            firstQuakeFeature.geometry.coordinates.lon = firstQuakeLon;
-            vectorSource.addFeature(new ol.Feature(new ol.geom.Circle([firstQuakeLat, firstQuakeLon], 5e6)));
-        }
-
-   //     vectorSource.addFeature(new ol.Feature(new ol.geom.Circle([49.003, -125.552], 5e6)));
 
 
         //get geoJSON features
