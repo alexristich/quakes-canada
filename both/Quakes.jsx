@@ -15,28 +15,39 @@ Schemas.Quake = new SimpleSchema({
         optional: true
     },
 
-    geoJSON: {
+    feature: {
+        type: Object,
+        label: "Feature Data",
+        optional: true
+    },
+
+    "feature.type": {
+        type: String,
+        label: "Feature Type"
+    },
+
+    "feature.geometry": {
         type: Object,
         label: "GeoJSON Data",
         optional: true
     },
 
-    "geoJSON.type": {
+    "feature.geometry.type": {
         type: String,
         label: "GeoJSON Type"
     },
 
-    "geoJSON.coordinates": {
+    "feature.geometry.coordinates": {
         type: Object,
         label: "Coordinates"
     },
 
-    "geoJSON.coordinates.lat": {
+    "feature.geometry.coordinates.lat": {
         type: String,
         label: "Latitude"
     },
 
-    "geoJSON.coordinates.lon": {
+    "feature.geometry.coordinates.lon": {
         type: String,
         label: "Longitude"
     },
@@ -101,14 +112,17 @@ Meteor.methods({
 
         JSONObject = {
             type: data.geoJSON.type,
-                coordinates: coordinates
+            coordinates: coordinates
         };
 
         var quake = {
             _id: data.solution_id,
             // TODO set this as a JS Date object
             date: data.origin_time,
-            geoJSON: JSONObject,
+            feature: {
+                type: "Feature",
+                geometry: JSONObject
+            },
             mag: data.magnitude,
             depth: data.depth,
             magType: data.magnitude_type
@@ -117,8 +131,6 @@ Meteor.methods({
         Quakes.upsert({_id: quakeId}, {
             $set: quake
         });
-
-        console.log(Quakes.findOne({_id: quakeId}));
 
         // TODO check if we need to change this to upsert when adding additional data sets
 
