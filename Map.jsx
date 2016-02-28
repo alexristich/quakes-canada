@@ -9,11 +9,11 @@ Map = React.createClass({
             target: 'render-map',
             layers: [
                 new ol.layer.Tile({
-                    source: new ol.source.MapQuest({layer: 'sat'})
+                    source: new ol.source.Stamen({layer: 'toner'})
                 })
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([37.41, 8.82]),
+                center: ol.proj.fromLonLat([-96, 61]),
                 zoom: 4
             })
         });
