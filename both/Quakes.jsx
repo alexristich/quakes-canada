@@ -70,9 +70,6 @@ Meteor.methods({
                 Meteor.call("addEarthquake", eqData[quakeName]);
             }
         }
-
-
-        console.log(Quakes.find({}).fetch())
     },
 
     addEarthquake: function(quakeData) {
@@ -89,8 +86,6 @@ Meteor.methods({
             depth: quakeData.depth,
             type: quakeData.magnitude_type
         };
-
-        console.log(quake);
 
         // TODO check if we need to change this to upsert when adding additional data sets
         Quakes.insert(quake);
