@@ -16,7 +16,7 @@ Schemas.Quake = new SimpleSchema({
     },
 
     lat: {
-        type: Float,
+        type: String,
         label: "Latitude"
     },
 
