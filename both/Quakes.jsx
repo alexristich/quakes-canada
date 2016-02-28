@@ -3,7 +3,7 @@ Quakes = new Mongo.Collection('quakes');
 var Schemas = {};
 
 Schemas.Quake = new SimpleSchema({
-    id: {
+    _id: {
         type: String,
         label: "Solution ID"
     },
@@ -73,11 +73,10 @@ Meteor.methods({
     },
 
     addEarthquake: function(quakeData) {
-        // TODO add quake
         // TODO parse location
 
         var quake = {
-            id: quakeData.solution_id,
+            _id: quakeData.solution_id,
             // TODO set this as a JS Date object
             date: quakeData.origin_time,
             lat: quakeData.geoJSON.coordinates[0],
@@ -89,6 +88,10 @@ Meteor.methods({
 
         // TODO check if we need to change this to upsert when adding additional data sets
         Quakes.insert(quake);
+    },
+
+    clearQuakes: function() {
+        Quakes.remove({});
     }
 
 });
