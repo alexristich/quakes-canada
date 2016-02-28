@@ -47,5 +47,15 @@ Quakes.attachSchema(Schemas.Quake);
 
 Meteor.methods({
     // this contains all the methods to store and retrieve earthquake data
-    
+    getEQData: function() {
+        // TODO: create JSON file
+        HTTP.get(Meteor.absoluteUrl("earthquakes.JSON"), function(error, result){
+            Meteor.call("parseEQData", result.data)
+        });
+    },
+
+    parseEQData: function(eqData) {
+        //TODO: figure out logic to parse the data
+    }
+
 });
