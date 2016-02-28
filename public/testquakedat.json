@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "request": {
+      "dateCreated": "2016-02-28T00:45:14-00:00",
+      "dateModified": "2016-02-26T00:35:13-00:00",
+      "licenses": ["http:\/\/data.gc.ca\/eng\/open-government-licence-canada"],
+      "resultCount": 59,
+      "name": {
+        "en": "Earthquakes in the last 7 days"
+      }
+    }
+  },
+  "20160226.0035001": {
+    "solution_id": "20160226.0035001",
+    "origin_time": "2016-02-26T00:35:13+0000",
+    "magnitude": 1.5,
+    "magnitude_type": "ML",
+    "depth": 31.94,
+    "depth_fixed": "t",
+    "felt": "t",
+    "final": "t",
+    "reviewed": "t",
+    "local_time_utc_offset": -28800,
+    "local_time_dst_offset": 0,
+    "geoJSON": {
+      "type": "Point",
+      "coordinates": [49.003, -125.552]
+    },
+    "details": {
+      "en": ""
+    },
+    "location": {
+      "en": "5 km N of Ucluelet, BC VANCOUVER ISLAND, CANADA REGION"
+    },
+    "offset_unit": "s",
+    "depth_unit": "km"
+  }
+}
