@@ -21,4 +21,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 react
 http
 aldeed:collection2
-alon:ol3
+alon:ol3-update-3.14.0
